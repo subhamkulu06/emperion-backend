@@ -1,5 +1,4 @@
-node_modules/
+clean/..cache/
+clean/.cache/
 dist/
-.env
-clean/_logs/
-*.log
+node_modules/

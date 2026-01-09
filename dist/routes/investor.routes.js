@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const investor_controller_1 = require("../controllers/investor.controller");
+const investorAuth_1 = require("../middleware/investorAuth");
+const router = (0, express_1.Router)();
+router.post("/register", investor_controller_1.registerInvestor);
+router.post("/login", investor_controller_1.loginInvestor);
+router.get("/dashboard", investorAuth_1.requireInvestorAuth, investor_controller_1.getInvestorDashboard);
+exports.default = router;

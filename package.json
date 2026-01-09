@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "dist/server.js",
   "scripts": {
+    "dev": "ts-node-dev src/server.ts",
     "start": "node dist/server.js",
     "build": "tsc",
     "create-admin": "ts-node src/scripts/createAdmin.ts"

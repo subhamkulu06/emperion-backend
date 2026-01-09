@@ -5,13 +5,13 @@
 4 silly config load:file:c:\Users\subha\OneDrive\Desktop\emperion\clean\emperion-backend\.npmrc
 5 silly config load:file:C:\Users\subha\.npmrc
 6 silly config load:file:C:\Users\subha\AppData\Roaming\npm\etc\npmrc
-7 verbose title npm view @types/jsonwebtoken description dist-tags.latest homepage version time
-8 verbose argv "view" "--json" "--" "@types/jsonwebtoken" "description" "dist-tags.latest" "homepage" "version" "time"
-9 verbose logfile logs-max:10 dir:c:\Users\subha\OneDrive\Desktop\emperion\clean\emperion-backend\clean\_logs\2026-01-09T15_43_18_600Z-
-10 verbose logfile c:\Users\subha\OneDrive\Desktop\emperion\clean\emperion-backend\clean\_logs\2026-01-09T15_43_18_600Z-debug-0.log
+7 verbose title npm view bcryptjs description dist-tags.latest homepage version time
+8 verbose argv "view" "--json" "--" "bcryptjs" "description" "dist-tags.latest" "homepage" "version" "time"
+9 verbose logfile logs-max:10 dir:c:\Users\subha\OneDrive\Desktop\emperion\clean\emperion-backend\clean\_logs\2026-01-09T17_55_42_797Z-
+10 verbose logfile c:\Users\subha\OneDrive\Desktop\emperion\clean\emperion-backend\clean\_logs\2026-01-09T17_55_42_797Z-debug-0.log
 11 silly logfile start cleaning logs, removing 1 files
 12 silly logfile done cleaning log files
-13 http fetch GET 200 https://registry.npmjs.org/@types%2fjsonwebtoken 4002ms (cache revalidated)
+13 http fetch GET 200 https://registry.npmjs.org/bcryptjs 450ms (cache revalidated)
 14 verbose cwd c:\Users\subha\OneDrive\Desktop\emperion\clean\emperion-backend
 15 verbose os Windows_NT 10.0.26100
 16 verbose node v24.12.0

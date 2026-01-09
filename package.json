@@ -7,6 +7,9 @@
     "start": "node dist/server.js",
     "create-admin": "ts-node src/scripts/createAdmin.ts"
   },
+  "engines":{
+    "node": "18.x"
+  },
   "dependencies": {
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.5",

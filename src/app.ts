@@ -7,7 +7,7 @@ import inventoryRoutes from "./routes/inventory.routes";
 import adminRoutes from "./routes/admin.routes";
 import { errorHandler } from "./middleware/error.middleware";
 import investorRoutes from "./routes/investor.routes";
-
+import { Request,Response} from "express";
 const app = express();
 
 app.use(cors());
@@ -22,7 +22,7 @@ app.use("/uploads",express.static("uploads"));
 app.use("/api/investors", investorRoutes);
 
 app.use(errorHandler);
-app.get("/", (req,res) => {
+app.get("/test", (req: Request,res: Response) => {
     res.send("Emperion Backend Live");
 });
 

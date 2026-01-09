@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "dist/server.js",
   "scripts": {
-    "build": "tsc",
     "start": "node dist/server.js",
+    "build": "tsc",
     "create-admin": "ts-node src/scripts/createAdmin.ts"
   },
   "engines":{

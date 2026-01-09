@@ -6,6 +6,6 @@ connectDB();
 
 const PORT = process.env.PORT || env.PORT || 5000;
 
-app.listen(env.PORT, () => {
+app.listen(PORT, () => {
   console.log(`🚀 Emperion backend running on port ${PORT}`);
 });

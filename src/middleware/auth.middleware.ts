@@ -2,14 +2,8 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { env } from "../config/env";
 
-export interface AuthRequest extends Request {
-  admin?: {
-    id: string;
-  };
-}
-
 export const requireAdmin = (
-  req: AuthRequest,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
@@ -23,7 +17,7 @@ export const requireAdmin = (
 
   try {
     const decoded = jwt.verify(token, env.JWT_SECRET as string) as any;
-    req.admin = { id: decoded.id };
+    res.locals.admin = { id: decoded.id };
     next();
   } catch (err) {
     return res.status(401).json({ message: "Invalid or expired token" });

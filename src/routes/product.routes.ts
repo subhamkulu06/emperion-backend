@@ -7,6 +7,26 @@ import { requireAdmin } from "../middleware/auth.middleware";
 const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
+/* =====================================================
+   PUBLIC PRODUCTS (NO AUTH) — FOR WEBSITE
+   GET /api/products/public
+===================================================== */
+router.get("/public", async (req, res) => {
+  try {
+    const products = await Product.find({ active: true }).sort({
+      createdAt: -1,
+    });
+    res.json(products);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to load products" });
+  }
+});
+
+/* =====================================================
+   CREATE PRODUCT (ADMIN ONLY)
+   POST /api/products
+===================================================== */
 router.post(
   "/",
   requireAdmin,
@@ -39,6 +59,7 @@ router.post(
         price: Number(price),
         stock: Number(stock),
         image: uploadResult.secure_url,
+        active: true,
       });
 
       res.json(product);
@@ -49,6 +70,10 @@ router.post(
   }
 );
 
+/* =====================================================
+   ADMIN PRODUCTS (PROTECTED)
+   GET /api/products
+===================================================== */
 router.get("/", requireAdmin, async (_, res) => {
   const products = await Product.find().sort({ createdAt: -1 });
   res.json(products);

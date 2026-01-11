@@ -8,10 +8,10 @@ const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
 /* =====================================================
-   PUBLIC PRODUCTS (NO AUTH) — FOR WEBSITE
-   GET /api/products/public
+   PUBLIC PRODUCTS (NO AUTH)
+   GET /api/products
 ===================================================== */
-router.get("/public", async (req, res) => {
+router.get("/", async (_req, res) => {
   try {
     const products = await Product.find({ active: true }).sort({
       createdAt: -1,
@@ -20,6 +20,20 @@ router.get("/public", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Failed to load products" });
+  }
+});
+
+/* =====================================================
+   ADMIN PRODUCTS (PROTECTED)
+   GET /api/products/admin
+===================================================== */
+router.get("/admin", requireAdmin, async (_req, res) => {
+  try {
+    const products = await Product.find().sort({ createdAt: -1 });
+    res.json(products);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to load admin products" });
   }
 });
 
@@ -71,12 +85,16 @@ router.post(
 );
 
 /* =====================================================
-   ADMIN PRODUCTS (PROTECTED)
-   GET /api/products
+   DELETE PRODUCT (ADMIN ONLY)
+   DELETE /api/products/:id
 ===================================================== */
-router.get("/", requireAdmin, async (_, res) => {
-  const products = await Product.find().sort({ createdAt: -1 });
-  res.json(products);
+router.delete("/:id", requireAdmin, async (req, res) => {
+  try {
+    await Product.findByIdAndDelete(req.params.id);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ message: "Delete failed" });
+  }
 });
 
 export default router;

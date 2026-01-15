@@ -1,61 +1,58 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-export interface InvestorDocument extends Document {
+export interface IInvestor extends Document {
   name: string;
   email: string;
+  contact?: string;
+
   password: string;
-  role: "investor";
-  status: "pending" | "approved" | "rejected";
+  status: "active" | "inactive";
+
   investedAmount: number;
-  returns: number;
-  createdAt: Date;
+  currentBalance: number;
+
+  investedOn: Date;
+  nextPayoutDate: Date;
+
+  growthTimeline: {
+    date: Date;
+    value: number;
+  }[];
 }
 
-const InvestorSchema = new Schema<InvestorDocument>(
+const GrowthSchema = new Schema(
   {
-    name: {
-      type: String,
-      required: true,
-    },
+    date: { type: Date, required: true },
+    value: { type: Number, required: true },
+  },
+  { _id: false }
+);
 
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
+const InvestorSchema = new Schema<IInvestor>(
+  {
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    contact: { type: String },
 
-    password: {
-      type: String,
-      required: true,
-    },
-
-    role: {
-      type: String,
-      default: "investor",
-    },
-
+    password: { type: String, required: true },
     status: {
       type: String,
-      enum: ["pending", "approved", "rejected"],
-      default: "pending",
+      enum: ["active", "inactive"],
+      default: "active",
     },
 
-    investedAmount: {
-      type: Number,
-      default: 0,
-    },
+    investedAmount: { type: Number, required: true, default: 0 },
+    currentBalance: { type: Number, required: true, default: 0 },
 
-    returns: {
-      type: Number,
-      default: 0,
+    investedOn: { type: Date, required: true },
+    nextPayoutDate: { type: Date, required: true },
+
+    growthTimeline: {
+      type: [GrowthSchema],
+      default: [],
     },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
-export default mongoose.model<InvestorDocument>(
-  "Investor",
-  InvestorSchema
-);
+export default mongoose.model<IInvestor>("Investor", InvestorSchema);

@@ -1,15 +1,11 @@
 import { Router } from "express";
-import {
-  registerInvestor,
-  loginInvestor,
-  getInvestorDashboard,
-} from "../controllers/investor.controller";
-import { requireInvestorAuth } from "../middleware/investorAuth";
+import { investorLogin } from "../controllers/investor.auth.controller";
+import { getInvestorDashboard } from "../controllers/investor.dashboard.controller";
+import { investorAuth } from "../middleware/investorAuth";
 
 const router = Router();
 
-router.post("/register", registerInvestor);
-router.post("/login", loginInvestor);
-router.get("/dashboard", requireInvestorAuth, getInvestorDashboard);
+router.post("/login", investorLogin);
+router.get("/dashboard", investorAuth, getInvestorDashboard);
 
 export default router;

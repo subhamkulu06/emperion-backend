@@ -3,11 +3,11 @@ import {
   getInventory,
   updateStock,
 } from "../controllers/inventory.controller";
-import { requireAdmin } from "../middleware/auth.middleware";
+import { adminAuth } from "../middleware/auth.middleware";
 
 const router = Router();
 
-router.use(requireAdmin); // 🔒 ADMIN ONLY
+router.use(adminAuth); // 🔒 ADMIN ONLY
 
 router.get("/", getInventory);
 router.patch("/:id", updateStock);

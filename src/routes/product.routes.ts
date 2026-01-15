@@ -2,7 +2,7 @@ import express from "express";
 import multer from "multer";
 import cloudinary from "../config/cloudinary";
 import Product from "../models/Product";
-import { requireAdmin } from "../middleware/auth.middleware";
+import { adminAuth } from "../middleware/auth.middleware";
 
 const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
@@ -27,7 +27,7 @@ router.get("/", async (_req, res) => {
    ADMIN PRODUCTS (PROTECTED)
    GET /api/products/admin
 ===================================================== */
-router.get("/admin", requireAdmin, async (_req, res) => {
+router.get("/admin", adminAuth, async (_req, res) => {
   try {
     const products = await Product.find().sort({ createdAt: -1 });
     res.json(products);
@@ -43,7 +43,7 @@ router.get("/admin", requireAdmin, async (_req, res) => {
 ===================================================== */
 router.post(
   "/",
-  requireAdmin,
+  adminAuth,
   upload.single("image"),
   async (req, res) => {
     try {
@@ -88,7 +88,7 @@ router.post(
    DELETE PRODUCT (ADMIN ONLY)
    DELETE /api/products/:id
 ===================================================== */
-router.delete("/:id", requireAdmin, async (req, res) => {
+router.delete("/:id", adminAuth, async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
     res.json({ success: true });

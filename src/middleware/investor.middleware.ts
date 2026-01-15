@@ -6,7 +6,7 @@ interface InvestorPayload {
   role: "investor";
 }
 
-export function requireInvestor(
+export function investorAuth(
   req: Request,
   res: Response,
   next: NextFunction

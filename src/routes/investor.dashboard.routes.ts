@@ -1,13 +1,9 @@
-import { Router } from "express";
-import { requireInvestor } from "../middleware/investor.middleware";
+import express from "express";
 import { getInvestorDashboard } from "../controllers/investor.dashboard.controller";
+import { investorAuth } from "../middleware/auth.middleware";
 
-const router = Router();
+const router = express.Router();
 
-/* ===========================
-   INVESTOR DASHBOARD
-   GET /api/investor/dashboard
-=========================== */
-router.get("/dashboard", requireInvestor, getInvestorDashboard);
+router.get("/dashboard", investorAuth, getInvestorDashboard);
 
 export default router;

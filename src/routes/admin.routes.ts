@@ -1,9 +1,10 @@
-import { Router } from "express";
-import { getDashboardMetrics } from "../controllers/admin.controller";
-import { requireAdmin } from "../middleware/auth.middleware";
+import express from "express";
+import { adminAuth } from "../middleware/auth.middleware";
 
-const router = Router();
+const router = express.Router();
 
-router.get("/dashboard", requireAdmin, getDashboardMetrics);
+router.get("/me", adminAuth, (_req, res) => {
+  res.json({ success: true });
+});
 
 export default router;

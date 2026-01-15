@@ -6,7 +6,7 @@ export interface AdminRequest extends Request {
 }
 
 export const adminAuth = (
-  req: AdminRequest,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
@@ -23,7 +23,7 @@ export const adminAuth = (
       process.env.JWT_SECRET as string
     ) as { adminId: string };
 
-    req.adminId = decoded.adminId;
+    (req as AdminRequest).adminId = decoded.adminId;
     next();
   } catch {
     return res.status(401).json({ message: "Invalid token" });

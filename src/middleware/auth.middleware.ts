@@ -1,30 +1,31 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
+export interface AdminRequest extends Request {
+  adminId?: string;
+}
+
 export const adminAuth = (
-  req: Request,
+  req: AdminRequest,
   res: Response,
   next: NextFunction
 ) => {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
   try {
-    const token = req.headers.authorization?.split(" ")[1];
-
-    if (!token) {
-      return res.status(401).json({ message: "Admin token missing" });
-    }
-
+    const token = authHeader.split(" ")[1];
     const decoded = jwt.verify(
       token,
       process.env.JWT_SECRET as string
-    ) as any;
+    ) as { adminId: string };
 
-    if (decoded.role !== "admin") {
-      return res.status(403).json({ message: "Admin access only" });
-    }
-
-    (req as any).adminId = decoded.id;
+    req.adminId = decoded.adminId;
     next();
-  } catch (err) {
-    return res.status(401).json({ message: "Invalid admin token" });
+  } catch {
+    return res.status(401).json({ message: "Invalid token" });
   }
 };

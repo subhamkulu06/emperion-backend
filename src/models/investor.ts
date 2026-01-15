@@ -1,58 +1,34 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose from "mongoose";
 
-export interface IInvestor extends Document {
-  name: string;
-  email: string;
-  contact?: string;
+const growthSchema = new mongoose.Schema({
+  date: String,
+  value: Number,
+});
 
-  password: string;
-  status: "active" | "inactive";
-
-  investedAmount: number;
-  currentBalance: number;
-
-  investedOn: Date;
-  nextPayoutDate: Date;
-
-  growthTimeline: {
-    date: Date;
-    value: number;
-  }[];
-}
-
-const GrowthSchema = new Schema(
+const investorSchema = new mongoose.Schema(
   {
-    date: { type: Date, required: true },
-    value: { type: Number, required: true },
-  },
-  { _id: false }
-);
+    name: String,
+    email: { type: String, unique: true },
+    contact: String,
+    image: String,
+    about: String,
 
-const InvestorSchema = new Schema<IInvestor>(
-  {
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    contact: { type: String },
+    password: String,
 
-    password: { type: String, required: true },
+    investedAmount: Number,
+    currentBalance: Number,
+    investedOn: String,
+    nextPayoutDate: String,
+
+    growthTimeline: [growthSchema],
+
     status: {
       type: String,
-      enum: ["active", "inactive"],
+      enum: ["active", "paused"],
       default: "active",
-    },
-
-    investedAmount: { type: Number, required: true, default: 0 },
-    currentBalance: { type: Number, required: true, default: 0 },
-
-    investedOn: { type: Date, required: true },
-    nextPayoutDate: { type: Date, required: true },
-
-    growthTimeline: {
-      type: [GrowthSchema],
-      default: [],
     },
   },
   { timestamps: true }
 );
 
-export default mongoose.model<IInvestor>("Investor", InvestorSchema);
+export default mongoose.model("Investor", investorSchema);

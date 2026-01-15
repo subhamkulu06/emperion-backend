@@ -9,6 +9,7 @@ import adminRoutes from "./routes/admin.routes";
 import investorAuthRoutes from "./routes/investor.auth.routes";
 import investorDashboardRoutes from "./routes/investor.dashboard.routes";
 import investorRoutes from "./routes/investor.routes";
+import adminInvestorRoutes from "./routes/admin.investor.routes";
 
 import { errorHandler } from "./middleware/error.middleware";
 
@@ -27,6 +28,7 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/investors", investorAuthRoutes);
 app.use("/api/investor", investorDashboardRoutes);
 app.use("/api/investor", investorRoutes);
+app.use("/api/admin/investors", adminInvestorRoutes);
 
 /* ================= STATIC ================= */
 app.use("/uploads", express.static("uploads"));

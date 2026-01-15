@@ -1,28 +1,30 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { env } from "../config/env";
 
-export const requireAdmin = (
+export const adminAuth = (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const authHeader = req.headers.authorization;
-
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res.status(401).json({ message: "Not authenticated" });
-  }
-
-  const token = authHeader.split(" ")[1];
-
   try {
-    const decoded = jwt.verify(token, env.JWT_SECRET) as any;
+    const token = req.headers.authorization?.split(" ")[1];
 
-    // attach admin id to request
-    (req as any).admin = { id: decoded.id };
+    if (!token) {
+      return res.status(401).json({ message: "Admin token missing" });
+    }
 
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET as string
+    ) as any;
+
+    if (decoded.role !== "admin") {
+      return res.status(403).json({ message: "Admin access only" });
+    }
+
+    (req as any).adminId = decoded.id;
     next();
   } catch (err) {
-    return res.status(401).json({ message: "Invalid or expired token" });
+    return res.status(401).json({ message: "Invalid admin token" });
   }
 };

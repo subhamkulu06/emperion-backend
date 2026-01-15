@@ -1,12 +1,9 @@
-import { Router } from "express";
+import express from "express";
 import { investorLogin } from "../controllers/investor.auth.controller";
 
-const router = Router();
+const router = express.Router();
 
-/* ===========================
-   INVESTOR LOGIN
-   POST /api/investor/login
-=========================== */
-router.post("/login", investorLogin);
+// POST /api/investor/auth/login
+router.post("/auth/login", investorLogin);
 
 export default router;
